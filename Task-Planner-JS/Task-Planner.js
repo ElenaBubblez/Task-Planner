@@ -4,29 +4,29 @@ let deleteButton = document.getElementById('#deleteButton');
 
 //validate form input.
 function validateTaskForm(){
-    let name = document.querySelector('#assignedBy').value;
-    let description = document.querySelector('#description').value;
-    let assignedTo = document.querySelector('#assignedTo').value;
-    let date = document.querySelector('#dueDate').value;
-    let status = document.querySelector('#inputStatus').value;
+    const name = document.querySelector('#assignedBy').value;
+    const description = document.querySelector('#description').value;
+    const assignedTo = document.querySelector('#assignedTo').value;
+    const date = document.querySelector('#dueDate').value;
+    const status = document.querySelector('#inputStatus').value;
     
     let score = 0;
     
     let isValid = false;
     
-    if(name.length > 3 && name.length != -1){
+    if(name.length >= 3){
         score ++;
     }
     else{
         document.getElementById("error1").innerHTML = "Text needs to be more than 5 characters";
     }
-    if(assignedTo.length > 3 && assignedTo.length != -1){
+    if(assignedTo.length >= 3){
         score++;
     }
     else{
         document.getElementById("error2").innerHTML = "Text needs to be more than 10 characters";
     }
-    if(description.length > 5 && description.length != -1){
+    if(description.length >= 5){
         score++;
     }
     else{
@@ -58,6 +58,8 @@ function validateTaskForm(){
         myTaskManager.addTask(myTaskManager.allTasks[taskIndex]);
 
     }
+
+    return isValid;
 }
 
 
@@ -79,52 +81,59 @@ function createTaskObj(name, description, assignedTo, date, status, taskArray){
 }
 
 
+// click event to get whatever object has been clicked on.
+document.addEventListener('click', function(event){
+
+    //stores element clicked on in a variable
+    const element = event.target;
+
+    //passes through the deleteTask function inside the TaskManager
+    myTaskManager.deleteTask(element);
+    console.log(element);
+    return element;
+    
+})
 
 
     class TaskManager{
 
-        constructor(array, names)
+        constructor(array)
         {
             this.allTasks = array;
-            this.names = names;
-   
-
         }
-    //returns the list of all task
-    getAllTask(){
-        console.log(this.allTasks);
-    }
+        //returns the list of all task
+        getAllTask(){
+            console.log(this.allTasks);
+        }
 
-    //returns a list of all task that status is equal to the status passes as an argument:
-    getTasksWithStatus(){
-        
-    }
+        //returns a list of all task that status is equal to the status passes as an argument:
+        getTasksWithStatus(){
+            
+        }
 
-    //add task to existing task list
-    addTask(taskObj){
+        //add task to existing task list
+        addTask(taskObj){
 
        
         //interpolates the user input into the shown card
-        const cardContent  =  `<div class="col-md-2 d-flex justify-content-center" id=${taskObj.id}>
-                                    <div class="card" style="width: 18rem;">
+        const cardContent  =  `<div class="col-md-3" taskId=${taskObj.id}>
+                                    <div class="card">
                                         <div class="card-header">
                                         Task
                                         </div>
                                         <div class="card-body" >
                                             <h6 class="card-title">Assigned To:</h5>
-                                            <p class="card-text" id="showAssignedTo">${taskObj.assignedTo}</p>
+                                            <p class="card-text">${taskObj.assignedTo}</p>
                                             <h6 class="card-title">Assigned By:</h5>
-                                            <p class="card-text" id="showAssignedBy">${taskObj.name}</p>
+                                            <p class="card-text">${taskObj.name}</p>
                                             <h6 class="card-title">Due Date:</h5>
-                                            <p class="card-text" id="showDueDate">${taskObj.date}</p>
+                                            <p class="card-text">${taskObj.date}</p>
                                             <h6 class="card-title">Status:</h5>
-                                            <p class="card-text" id="showStatus">${taskObj.status}</p>
+                                            <p class="card-text">${taskObj.status}</p>
                                             <h6 class="card-title">Description:</h5>
-                                            <p class="card-text" id="showDescription">${taskObj.description}</p>
+                                            <p class="card-text">${taskObj.description}</p>
                                         </div>
-                                        <div>
-                                            <button  type="button" onclick="deleteTask()" id="deleteButton" class="btn btn-primary">Delete</button>
-                                        </div>
+                                            <button  type="button" class="btn btn-dark" delId=${taskObj.id}>Delete</button>
                                     </div> 
                                 </div>`;
 
@@ -135,41 +144,55 @@ function createTaskObj(name, description, assignedTo, date, status, taskArray){
             
 
             //interpolates the user input into the shown list
-            const listContent = `<div class="list-group" role="tablist">
-                                    <a class="list-group-item list-group-item-action" id=${taskObj.id} data-toggle="list" href="#list-home" role="tab">
-                                    <h6>Assigned To: ${taskObj.assignedTo}</h6>
-                                    <p>Due Date: ${taskObj.date}</p>
-                                    <p>Status: ${taskObj.status}</p>
-                                    </a>
-                                </div>`;
+            const listContent = `<a href="#" class="list-group-item list-group-item-action taskId=${taskObj.id}">
+                                    <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">Assigned To: ${taskObj.assignedTo}</h5>
+                                    <small>Due Date: ${taskObj.date}</small>
+                                    </div>
+                                    <small>Status: ${taskObj.status}</small>
+                                </a>`;
 
             let listCol = document.getElementById('listID');
             console.log(listCol);
             listCol.insertAdjacentHTML('afterBegin', listContent);
-    }
+        }
+    
 
 
     
     
 
-    //deletes task from task list
-    deleteTask(element){
-        // let thisTaskID = element.parentNode.parentNode.attributes.id.value;
+        //deletes task from task list
+        deleteTask(element){
+        //this stores the element clicked top parent nodes id value
+        let topParent = element.parentNode.parentNode.attributes.taskId.value;
 
-        // for(i = 0; i < this.allTasks.Length; i++){
-        //     if(this.allTasks[i].ID = thisTaskID){
-        //         this.allTasks.splice(i, 1);
-        //     }
-        // }
+            //this removes item off array permenantly
+        for(let i = 0; i < this.allTasks.Length; i++){
+            if(this.allTasks[i].id == topParent){
+                //goes to the element clicked in the array and removes 1
+                this.allTasks.splice(i, 1);
+            }
+        }
+        //gets the parent node above the ones you want to get rid of. then removes the child node, and the two parent nodes above, but not including the very top parent node which is a row.
+        element.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode);
 
-        // element.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode);
+        //gets all element of all the a tags
+        let elementA = document.querySelectorAll('a');
 
+        for( let i = 0; i < elementA.length; i++){
+            //element now = whatever 'a' tag has been targeted
+            element = elementA[i];
+            //removes item from list
+            if(element.attributes.taskId.value == topParent){
+            element.parentNode.removeChild(element);
+            }
+        }
 
-    }
+        }
 
-    //update task status
-    updateTask(){
-
+        //update task status
+        updateTask(){ 
     }
     
     
@@ -181,5 +204,5 @@ function createTaskObj(name, description, assignedTo, date, status, taskArray){
 //array to store input
 let taskArray = [];
 
-let myTaskManager = new TaskManager(taskArray, "todoTask");
+let myTaskManager = new TaskManager(taskArray);
 

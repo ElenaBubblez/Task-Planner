@@ -6,6 +6,12 @@ html, body
 
 .row
 {
-    margin: 5%;
+    margin: 20px;
 }
+
+.card
+{
+    margin-top: 20px;
+}
+
 
