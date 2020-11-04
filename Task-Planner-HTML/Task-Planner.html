@@ -63,10 +63,11 @@
         <div class="form-group">
           <label for="inputStatus">Status</label>
           <select id="inputStatus" class="form-control">
-            <option value="TODO">To Do</option>
-            <option value="IN PROGRESS">In Progress</option>
-            <option value="REVIEW">Review</option>
-            <option value="DONE">Done</option>
+            <option value="Choose">Choose...</option>
+            <option value="ToDo">To Do</option>
+            <option value="In Progeress">In Progress</option>
+            <option value="Review">Review</option>
+            <option value="Done">Done</option>
           </select>
           <p id="error5"></p>
         </div>
@@ -79,10 +80,13 @@
     </div>
 
     <!--custom content list coloumn-->
-    <div class="col-md-6 d-flex justify-content-center">
-      <div class="list-group" id="taskList" role="tablist">
-        <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home"></a>
-      </div>
+    <div class="col-md-6 d-flex justify-content-center" id="listID">
+      <!-- <div class="list-group" id="taskList" role="tablist">
+        <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">
+          <h6>Assigned To:</h6>
+          <p>Due Date:</p>
+        </a>
+      </div> -->
     </div>
 
 </div>
@@ -94,25 +98,7 @@
         <br>
     <!--cards-->
     <div class="row justify-content-center" id="rowID">
-      <div class="col-md-2 d-flex justify-content-center">
-        <div class="card" id="list-items" style="width: 18rem;">
-          <!--<div class="card-header">
-            Task
-          </div>
-             <div class="card-body">
-              <h6 class="card-title">Assigned To:</h5>
-              <p class="card-text" id="showAssignedTo"></p>
-              <h6 class="card-title">Assigned By:</h5>
-              <p class="card-text" id="showAssignedBy"></p>
-              <h6 class="card-title">Due Date:</h5>
-              <p class="card-text" id="showDueDate"></p>
-              <h6 class="card-title">Status:</h5>
-              <p class="card-text" id="showStatus"></p>
-              <h6 class="card-title">Description:</h5>
-              <p class="card-text" id="showDescription"></p>
-            </div> -->
-        </div>
-      </div>
+      <!--this is where my card will populate-->
     </div>
 
 
@@ -121,10 +107,10 @@
 
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="C:\Users\Elena\OneDrive\VS Code\Task-Planner\Task-Planner-JS\Task-Planner.js"></script>
+    
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+    <script src="C:\Users\Elena\OneDrive\VS Code\Task-Planner\Task-Planner-JS\Task-Planner.js"></script>
 </body>
 </html>
