@@ -63,31 +63,34 @@ function validateTaskForm(){
 
     if(isValid == true)
     {
-        createTaskObj(name, description, assignedTo, date, status, taskArray);
-        let taskIndex = myTaskManager.allTasks.length-1;
-        myTaskManager.addTask(myTaskManager.allTasks[taskIndex]);
-
+        createTaskObj(name, description, assignedTo, date, status);
+        let taskArrayIndex = myTaskManager.allTasks.length-1;
+        myTaskManager.addTask(myTaskManager.allTasks[taskArrayIndex]);
+        
+        console.log();
     }
 
     return isValid;
 }
 
 
-
 //function to create task object of user input
-function createTaskObj(name, description, assignedTo, date, status, taskArray){
+function createTaskObj(name, description, assignedTo, date, status){
 
     myTaskManager.allTasks.push({
     //checks if id has been created, if not then create id 1, if id is already created then next id is current length +1
-    "id": `${taskArray.length < 1 ? 1: taskArray.length+1}`,
+    "id": `${myTaskManager.allTasks.length < 1 ? 1: myTaskManager.allTasks.length+1}`,
     "name": name,
     "description": description,
     "assignedTo": assignedTo,
     "date": date,
     "status": status
     })
-    console.log(taskArray);
-    return myTaskManager.allTasks;
+    console.log(myTaskManager.allTasks);
+
+     // sets item in the local storage
+    localStorage.setItem("TaskCard", JSON.stringify(myTaskManager.allTasks));
+    
 }
 
 
@@ -99,22 +102,21 @@ document.addEventListener('click', function(event){
 
     //passes through the deleteTask function inside the TaskManager
     myTaskManager.deleteTask(element);
+  
     console.log(element);
 
 
-    return element;
+    // return element;
     
 });
 
 
-    // localStorage.setItem('storetaskManager', );
 
+class TaskManager{
 
-    class TaskManager{
-
-        constructor(array)
+        constructor()
         {
-            this.allTasks = array;
+            this.allTasks = [];
         }
         //returns the list of all task
         getAllTask(){
@@ -141,12 +143,12 @@ document.addEventListener('click', function(event){
                                             <p class="card-text">${taskObj.assignedTo}</p>
                                             <h6 class="card-title">Assigned By:</h5>
                                             <p class="card-text">${taskObj.name}</p>
+                                            <h6 class="card-title">Description:</h5>
+                                            <p class="card-text">${taskObj.description}</p>
                                             <h6 class="card-title">Due Date:</h5>
                                             <p class="card-text">${taskObj.date}</p>
                                             <h6 class="card-title">Status:</h5>
-                                            <p class="card-text">${taskObj.status}</p>
-                                            <h6 class="card-title">Description:</h5>
-                                            <p class="card-text">${taskObj.description}</p>
+                                            <p class="card-text">${taskObj.status}</p>                                         
                                             <button delId="${taskObj.id}" type="button" class="btn btn-dark" >Delete</button>
                                         </div>
                                             
@@ -188,16 +190,19 @@ document.addEventListener('click', function(event){
         
 
             //this removes item off array permenantly
-        for(let i = 0; i < this.allTasks.Length; i++){
-            if(this.allTasks[i].id = topParent){
+        for(let i = 0; i < this.allTasks.length; i++){
+            if(this.allTasks[i].id == topParent){
                 //goes to the element clicked in the array and removes 1
                 this.allTasks.splice(i, 1);
+               // sets item in the local storage
+               localStorage.setItem("TaskCard", JSON.stringify(myTaskManager.allTasks));
             }
         }
+
         //gets the parent node above the ones you want to get rid of. then removes the child node, and the 3 parent nodes above, but not including the very top parent node which is a row.
         element.parentNode.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode.parentNode);
 
-        //gets all element of all the a tags
+        //gets all element of all the a tags 
         let elementA = document.getElementsByTagName('a');
         
 
@@ -218,13 +223,25 @@ document.addEventListener('click', function(event){
     }
     
     
-
-
 }
 
 
-//array to store input
-let taskArray = [];
+let myTaskManager = new TaskManager();
 
-let myTaskManager = new TaskManager(taskArray);
+//this gets the data back from local storage
+let data = localStorage.getItem("TaskCard");
+if(data){
+    myTaskManager.allTasks = JSON.parse(data);
+    showItems(myTaskManager.allTasks)
+} else {
+    myTaskManager.allTasks = [];
+}
+
+function showItems(array){
+    for(let i=0; i < array.length; i++){
+        myTaskManager.addTask(array[i]);
+    }
+}
+
+
 
