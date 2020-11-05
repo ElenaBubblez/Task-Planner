@@ -1,5 +1,4 @@
 
-let deleteButton = document.getElementById('#deleteButton');
 
 
 //validate form input.
@@ -9,41 +8,52 @@ function validateTaskForm(){
     const assignedTo = document.querySelector('#assignedTo').value;
     const date = document.querySelector('#dueDate').value;
     const status = document.querySelector('#inputStatus').value;
-    
+    let  error1 = document.getElementById("error1");
+    let  error2 = document.getElementById("error2");
+    let  error3 = document.getElementById("error3");
+    let  error4 = document.getElementById("error4");
+    let  error5 = document.getElementById("error5");
+
+
     let score = 0;
     
     let isValid = false;
     
     if(name.length >= 3){
         score ++;
+        error1.innerHTML = "";
     }
     else{
-        document.getElementById("error1").innerHTML = "Text needs to be more than 5 characters";
-    }
-    if(assignedTo.length >= 3){
-        score++;
-    }
-    else{
-        document.getElementById("error2").innerHTML = "Text needs to be more than 10 characters";
+        error1.innerHTML = "Text needs to be 3 or more characters";
     }
     if(description.length >= 5){
         score++;
+        error2.innerHTML = "";
     }
     else{
-        document.getElementById("error3").innerHTML = "Text needs to be more than 5 characters";
+        error2.innerHTML = "Text needs to be 5 or more characters";
+    }
+    if(assignedTo.length >= 3){
+        score++;
+        error3.innerHTML = "";
+    }
+    else{
+        error3.innerHTML = "Text needs to be 3 or more characters";
     }
     if(date){
         score++;
+        error4.innerHTML = "";
     }
     else {
-        document.getElementById("error4").innerHTML = "Please input a date";
+        error4.innerHTML = "Please input a date";
     }
 
     if(status != "Choose"){
         score++;
+        error5.innerHTML = "";
     }
     else {
-        document.getElementById("error5").innerHTML = "Please choose status of task";
+        error5.innerHTML = "Please choose status of task";
     }
 
     if(score == 5){
@@ -90,9 +100,14 @@ document.addEventListener('click', function(event){
     //passes through the deleteTask function inside the TaskManager
     myTaskManager.deleteTask(element);
     console.log(element);
+
+
     return element;
     
-})
+});
+
+
+    // localStorage.setItem('storetaskManager', );
 
 
     class TaskManager{
@@ -116,7 +131,7 @@ document.addEventListener('click', function(event){
 
        
         //interpolates the user input into the shown card
-        const cardContent  =  `<div class="col-md-3" taskId=${taskObj.id}>
+        const cardContent  =  `<div class="col-md-3" taskId="${taskObj.id}">
                                     <div class="card">
                                         <div class="card-header">
                                         Task
@@ -132,11 +147,13 @@ document.addEventListener('click', function(event){
                                             <p class="card-text">${taskObj.status}</p>
                                             <h6 class="card-title">Description:</h5>
                                             <p class="card-text">${taskObj.description}</p>
+                                            <button delId="${taskObj.id}" type="button" class="btn btn-dark" >Delete</button>
                                         </div>
-                                            <button  type="button" class="btn btn-dark" delId=${taskObj.id}>Delete</button>
+                                            
                                     </div> 
                                 </div>`;
 
+            //gets the top element of the card and puts in a variable to be able to add card content inside.
             let cardRow = document.getElementById('rowID');
             console.log(cardRow);
              // Append newyly created card element to the cardContent
@@ -144,14 +161,15 @@ document.addEventListener('click', function(event){
             
 
             //interpolates the user input into the shown list
-            const listContent = `<a href="#" class="list-group-item list-group-item-action taskId=${taskObj.id}">
-                                    <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">Assigned To: ${taskObj.assignedTo}</h5>
+            const listContent = `<a href="#" class="list-group-item list-group-item-action" listTaskId="${taskObj.id}">
+                                    <div class="d-flex w-100">
+                                    <h5 class="mb-1">Assigned To: ${taskObj.assignedTo}</h5>                             
+                                    </div> 
                                     <small>Due Date: ${taskObj.date}</small>
-                                    </div>
-                                    <small>Status: ${taskObj.status}</small>
+                                    <small>Status: ${taskObj.status}</small>           
                                 </a>`;
 
+            //gets the top element of the list and puts in a variable to be able to add list content inside.
             let listCol = document.getElementById('listID');
             console.log(listCol);
             listCol.insertAdjacentHTML('afterBegin', listContent);
@@ -165,33 +183,37 @@ document.addEventListener('click', function(event){
         //deletes task from task list
         deleteTask(element){
         //this stores the element clicked top parent nodes id value
-        let topParent = element.parentNode.parentNode.attributes.taskId.value;
+        let topParent = element.parentNode.parentNode.parentNode.attributes.taskId.value;
+
+        
 
             //this removes item off array permenantly
         for(let i = 0; i < this.allTasks.Length; i++){
-            if(this.allTasks[i].id == topParent){
+            if(this.allTasks[i].id = topParent){
                 //goes to the element clicked in the array and removes 1
                 this.allTasks.splice(i, 1);
             }
         }
-        //gets the parent node above the ones you want to get rid of. then removes the child node, and the two parent nodes above, but not including the very top parent node which is a row.
-        element.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode);
+        //gets the parent node above the ones you want to get rid of. then removes the child node, and the 3 parent nodes above, but not including the very top parent node which is a row.
+        element.parentNode.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode.parentNode);
 
         //gets all element of all the a tags
-        let elementA = document.querySelectorAll('a');
+        let elementA = document.getElementsByTagName('a');
+        
 
         for( let i = 0; i < elementA.length; i++){
             //element now = whatever 'a' tag has been targeted
             element = elementA[i];
+        
             //removes item from list
-            if(element.attributes.taskId.value == topParent){
+            if(element.attributes.listTaskId.value == topParent){
             element.parentNode.removeChild(element);
             }
         }
 
         }
 
-        //update task status
+        //update task status 
         updateTask(){ 
     }
     
