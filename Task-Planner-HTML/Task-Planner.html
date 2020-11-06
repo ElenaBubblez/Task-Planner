@@ -19,17 +19,25 @@
     </head>
 <body>
 
-<div class="container">
+
   <!--Heading-->
-  <div>
-    <h1 class="jumbotron text-center justify-content-center">Task Manager</h1>
+
+  <div class="row row1">
+    <div class="w-50 mx-auto">
+      <h1 class="jumbotron text-center">Task Manager</h1>
+    </div>
   </div>
 
   <br>
 
-  <!-- Form to fill in --> 
+
+
+
+
   <div class="row">
-    <div class="col-md-6 ">
+
+    <!-- Form to fill in --> 
+    <div class="col-md-6 editCol" >
       <form>
           <!--input name-->
           <div class="form-group">
@@ -75,31 +83,35 @@
     
           <!--submit form button-->
           <div>
-              <button  type="button" onclick="validateTaskForm()" class="btn btn-primary">Add Item</button>
+              <button  type="button" onclick="validateTaskForm()" class="btn">Add Item</button>
           </div>
       </form>
+
+          <!--cards-->
+          <div class="row row3" id="rowID">
+            <!--this is where my card will populate-->
+          </div>
+
     </div>
 
+
+
     <!--list coloumn-->
-    <div class="col-md-6 d-flex justify-content-center" >
+    <div class="col-md-2" >
       <div class="list-group" id="listID">
         <!--this is where my list of tasks will populate-->
       </div>
     </div>
 
+      
   </div>
 
 
-    <br>
-
-    <!--cards-->
-    <div class="row" id="rowID">
-      <!--this is where my card will populate-->
-    </div>
 
 
-</div>
-    
+
+
+ 
 
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

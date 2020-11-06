@@ -96,9 +96,10 @@ function createTaskObj(name, description, assignedTo, date, status){
 
 // click event to get whatever object has been clicked on.
 document.addEventListener('click', function(event){
-
+    let deleteButton = document.querySelectorAll('delId').value;
     //stores element clicked on in a variable
     const element = event.target;
+    
 
     //passes through the deleteTask function inside the TaskManager
     myTaskManager.deleteTask(element);
@@ -136,22 +137,21 @@ class TaskManager{
         const cardContent  =  `<div class="col-md-3" taskId="${taskObj.id}">
                                     <div class="card">
                                         <div class="card-header">
-                                        Task
+                                        <h6>Task</h6>
                                         </div>
                                         <div class="card-body" >
-                                            <h6 class="card-title">Assigned To:</h5>
+                                            <h6 class="card-title">Assigned To:</h6>
                                             <p class="card-text">${taskObj.assignedTo}</p>
-                                            <h6 class="card-title">Assigned By:</h5>
+                                            <h6 class="card-title">Assigned By:</h6>
                                             <p class="card-text">${taskObj.name}</p>
-                                            <h6 class="card-title">Description:</h5>
+                                            <h6 class="card-title">Description:</h6>
                                             <p class="card-text">${taskObj.description}</p>
-                                            <h6 class="card-title">Due Date:</h5>
+                                            <h6 class="card-title">Due Date:</h6>
                                             <p class="card-text">${taskObj.date}</p>
-                                            <h6 class="card-title">Status:</h5>
+                                            <h6 class="card-title">Status:</h6>
                                             <p class="card-text">${taskObj.status}</p>                                         
-                                            <button delId="${taskObj.id}" type="button" class="btn btn-dark" >Delete</button>
-                                        </div>
-                                            
+                                            <button delId="${taskObj.id}" type="button" class="btn" >Delete</button>
+                                        </div>                                    
                                     </div> 
                                 </div>`;
 
