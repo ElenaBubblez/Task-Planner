@@ -10,7 +10,7 @@
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     
         <!--linking this html page to css styling-->
-        <link rel="stylesheet" type="text/css" href="C:\Users\Elena\OneDrive\VS Code\Task-Planner\Task-Planner-CSS\Task-Planner.css">
+        <link rel="stylesheet" type="text/css" href="/Task-Planner-CSS/Task-Planner.css">
     
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,31 +31,47 @@
   <br>
 
 
-
-
-
   <div class="row">
 
+    
+    <div class="col-md-3" >
+      <form> 
+        <div class="form-group">
+          <button type="button" id="clearStorage" class="btn">Clear All Tasks</button>
+          <br>
+          <label for="chooseStatus">Show Task By Status:</label>
+          <select onchange="myTaskManager.getTasksWithStatus()" id="chooseStatus" class="form-control event-type-select">
+            <option value="Choose">Choose...</option>
+            <option value="all">Show All</option>
+            <option value="ToDo">To Do</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Review">Review</option>
+            <option value="Done">Done</option>
+          </select>
+        </div>
+      </form>
+    </div>
+
     <!-- Form to fill in --> 
-    <div class="col-md-6 editCol" >
-      <form>
+    <div class="col-md-6" >
+      <form class="form1">
           <!--input name-->
           <div class="form-group">
-            <label for="exampleFormControlInput1">Name</label>
+            <label for="exampleFormControlInput1">Name:</label>
             <input type="text" class="form-control" id="assignedBy" placeholder="Name of the person creating the task">
             <p id="error1"></p>
           </div>
 
           <!--input description-->
           <div class="form-group">
-            <label for="exampleFormControlInput1">Description</label>
+            <label for="exampleFormControlInput1">Description:</label>
             <input type="text" class="form-control" id="description" placeholder="E.g. Email senior management team with final report">
             <p id="error2"></p>
           </div>
 
           <!--input Assigned to-->
           <div class="form-group">
-            <label for="exampleFormControlInput1">Assigned To</label>
+            <label for="exampleFormControlInput1">Assigned To:</label>
             <input type="text" class="form-control" id="assignedTo" placeholder="Name of the person that needs to do the task">
             <p id="error3"></p>
           </div>
@@ -63,32 +79,32 @@
 
           <!--input date-->
         <div class="form-group">
-          <label for="exampleFormControlInput1">Due Date</label>
+          <label for="exampleFormControlInput1">Due Date:</label>
           <input type="date" id="dueDate">
           <p id="error4"></p>
         </div>
 
         <!--input status-->
         <div class="form-group">
-          <label for="inputStatus">Status</label>
+          <label for="inputStatus">Status:</label>
           <select id="inputStatus" class="form-control">
             <option value="Choose">Choose...</option>
             <option value="ToDo">To Do</option>
-            <option value="In Progeress">In Progress</option>
+            <option value="In Progress">In Progress</option>
             <option value="Review">Review</option>
             <option value="Done">Done</option>
           </select>
           <p id="error5"></p>
         </div>
     
-          <!--submit form button-->
+          <!--submit button-->
           <div>
               <button  type="button" onclick="validateTaskForm()" class="btn">Add Item</button>
           </div>
       </form>
 
           <!--cards-->
-          <div class="row row3" id="rowID">
+          <div class="row row3" id="rowID" >
             <!--this is where my card will populate-->
           </div>
 
@@ -97,8 +113,8 @@
 
 
     <!--list coloumn-->
-    <div class="col-md-2" >
-      <div class="list-group" id="listID">
+    <div class="col-md-3" >
+      <div class="list-group" id="listID" >
         <!--this is where my list of tasks will populate-->
       </div>
     </div>
@@ -119,6 +135,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="C:\Users\Elena\OneDrive\VS Code\Task-Planner\Task-Planner-JS\Task-Planner.js"></script>
+    <script src="/Task-Planner-JS/Task-Planner.js"></script>
 </body>
 </html>
