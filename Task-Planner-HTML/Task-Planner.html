@@ -19,22 +19,21 @@
     </head>
 <body>
 
-
+<div class="container">
   <!--Heading-->
 
   <div class="row row1">
     <div class="w-50 mx-auto">
-      <h1 class="jumbotron text-center">Task Manager</h1>
+      <h1 class="jumbotron text-center" >Task Manager</h1>
     </div>
   </div>
 
   <br>
 
-
+  
   <div class="row">
 
-    
-    <div class="col-md-3" >
+    <div class="col-md-3">
       <form> 
         <div class="form-group">
           <button type="button" id="clearStorage" class="btn">Clear All Tasks</button>
@@ -51,7 +50,7 @@
         </div>
       </form>
     </div>
-
+    
     <!-- Form to fill in --> 
     <div class="col-md-6" >
       <form class="form1">
@@ -80,7 +79,8 @@
           <!--input date-->
         <div class="form-group">
           <label for="exampleFormControlInput1">Due Date:</label>
-          <input type="date" id="dueDate">
+          <br>
+          <input type="date"  id="dueDate">
           <p id="error4"></p>
         </div>
 
@@ -99,9 +99,10 @@
     
           <!--submit button-->
           <div>
-              <button  type="button" onclick="validateTaskForm()" class="btn">Add Item</button>
+              <button type="button" onclick="validateTaskForm()" class="btn">Add Item</button>
           </div>
       </form>
+    
 
           <!--cards-->
           <div class="row row3" id="rowID" >
@@ -113,7 +114,7 @@
 
 
     <!--list coloumn-->
-    <div class="col-md-3" >
+    <div class="col-md-3">
       <div class="list-group" id="listID" >
         <!--this is where my list of tasks will populate-->
       </div>
@@ -122,7 +123,7 @@
       
   </div>
 
-
+</div>
 
 
 

@@ -13,6 +13,7 @@ html, body
 
 .jumbotron
 {
+    font-size: 2vw;
     margin-top: 40px;
     border-radius: 20px;
     background-color:  #ffe2e2;
@@ -28,24 +29,53 @@ html, body
 .card
 {
     border-radius: 20px;
-    padding: 20px;
+    padding: 10px;
     margin-top: 20px;
     margin-bottom: 20px;
     background-color: #beebe9;
 
 }
 
-
+#dueDate
+{
+    border-radius: 3px;
+    border-style: none;
+}
 
 form
 {
-    margin-bottom: 50px;
+    font-size: 1.5vw;
+    margin-bottom: 20px;
     border-radius: 20px;
     padding: 20px;
     background-color: #8ac6d1;
     
 }
 
+h5
+{
+    font-size: 1.5vw;
+}
+
+p
+{
+    font-size: 1.3vw;
+}
+
+label
+{
+    font-size: 1.3vw;
+}
+
+.form-control
+{
+    font-size: 1.3vw;
+}
+
+small
+{
+    font-size: 1.3vw;
+}
 
 .card-body
 {
@@ -65,6 +95,7 @@ a.list-group-item-action:hover
 
 .btn
 {
+    font-size: 1.3vw;
     background-color:#ffe2e2;
 }
 

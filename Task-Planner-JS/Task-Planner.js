@@ -19,6 +19,8 @@ function validateTaskForm()
     let  error5 = document.getElementById("error5");
 
 
+
+
     let score = 0;
     
     let isValid = false;
@@ -114,25 +116,34 @@ function createTaskObj(name, description, assignedTo, date, status)
 // click event to get whatever object has been clicked on.
 document.addEventListener('click', function(event)
 {
-
-    let aButton = (event.target.nodeName == "BUTTON");
+    const element = event.target;
+    //stores element clicked on in a variable
+    let isBTN = (event.target.nodeName == "BUTTON");
     let isDeleteBtn = (event.target.classList == 'btn delete')
-    
-    if(aButton == true)
+    // let isUpdateBtn = (event.target.classList == 'btn update')
+
+    if(isBTN == true)
     {
         if(isDeleteBtn)
         {
             const confirmDelete = confirm("are you sure you want to delete this task?");
-            if(confirmDelete){
-            //stores element clicked on in a variable
-            const element = event.target;
+            if(confirmDelete)
+            {
+
 
             //passes through the deleteTask function inside the TaskManager
             myTaskManager.deleteTask(element);
+            
             }
         }
 
+        // if(isUpdateBtn)
+        // {
+
+        // }
+
     }
+    return element;
 
 });
 
@@ -223,12 +234,12 @@ class TaskManager
 
        
         //interpolates the user input into the shown card
-        const cardContent  =  `<div class="col-md-4" taskId="${taskObj.id}">
-                                    <div class="card">
+        const cardContent  =  `<div class="col-md-6" taskId="${taskObj.id}">
+                                    <div class="card" >
                                         <div class="card-header">
                                         <h5>Task</h5>
                                         </div>
-                                        <div class="card-body" >
+                                        <div class="card-body">
                                             <h5 class="card-title">Assigned To:</h5>
                                             <p class="card-text">${taskObj.assignedTo}</p>
                                             <h5 class="card-title">Assigned By:</h5>
@@ -240,7 +251,10 @@ class TaskManager
                                             <h5 class="card-title" id="status" >Status:</h5>
                                             <p class="card-text id="statusValue">${taskObj.status}</p>                                         
                                         </div>   
-                                        <button delId="${taskObj.id}" type="button" class="btn delete" >Delete</button>                                 
+                                        <div>
+                                        <button delId="${taskObj.id}" type="button" class="btn delete" >Delete</button>
+                                           
+                                        </div>                       
                                     </div> 
                                 </div>`;
 
@@ -277,7 +291,7 @@ class TaskManager
         deleteTask(element)
         {
             //this stores the element clicked top parent nodes id value
-            let topParent = element.parentNode.parentNode.attributes.taskId.value;
+            let topParent = element.parentNode.parentNode.parentNode.attributes.taskId.value;
                 console.log(topParent);
             
 
@@ -290,11 +304,14 @@ class TaskManager
                     this.allTasks.splice(i, 1);
                 // sets item in the local storage
                 localStorage.setItem("TaskCard", JSON.stringify(this.allTasks));
+                localStorage.setItem("SelectCard", JSON.stringify(this.filteredTasks));
                 }
             }
 
+
+
             //gets the parent node above the ones you want to get rid of. then removes the child node, and the 3 parent nodes above, but not including the very top parent node which is a row.
-            element.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode);
+            element.parentNode.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode.parentNode);
 
             //gets all element of all the a tags 
             let elementA = document.getElementsByTagName('a');
@@ -312,11 +329,13 @@ class TaskManager
                 }
             }
 
+            return element;
         }
 
         //update task status 
         updateTask()
         { 
+            
         }
     
     
@@ -330,7 +349,7 @@ let selectedData = localStorage.getItem("SelectCard");
 
 console.log(selectedData);
 //this gets the data back from local storage and displays it on screen
-let data = localStorage.getItem("TaskCard");
+ 
 console.log()
 
 function showItems(array)
@@ -342,19 +361,18 @@ function showItems(array)
     }
 }
 
-// if(data)
-// {
-//     myTaskManager.allTasks = JSON.parse(data);
-//     showItems(myTaskManager.allTasks);
-//     console.log(myTaskManager.allTasks);
-// } 
- if(selectedData)
+if(selectedData)
 {
     myTaskManager.allTasks = JSON.parse(selectedData);
     showItems(myTaskManager.allTasks);
     console.log(myTaskManager.allTasks);
-    
-}
+} 
+//  if(selectedData)
+// {
+//     myTaskManager.allTasks = JSON.parse(selectedData);
+//     showItems(myTaskManager.allTasks);
+//     console.log(myTaskManager.allTasks);
+// }
 
 
 // when clicking the clear storage button confirm alert appears 
@@ -366,6 +384,7 @@ document.getElementById('clearStorage').addEventListener('click', function()
     if(confirmClear)
     {
     localStorage.removeItem("TaskCard");
+    localStorage.removeItem("SelectCard");
     location.reload();
     }
 
