@@ -120,7 +120,7 @@ document.addEventListener('click', function(event)
     //stores element clicked on in a variable
     let isBTN = (event.target.nodeName == "BUTTON");
     let isDeleteBtn = (event.target.classList == 'btn delete')
-    // let isUpdateBtn = (event.target.classList == 'btn update')
+    let isUpdateBtn = (event.target.classList == 'btn update')
 
     if(isBTN == true)
     {
@@ -137,10 +137,10 @@ document.addEventListener('click', function(event)
             }
         }
 
-        // if(isUpdateBtn)
-        // {
+        if(isUpdateBtn)
+        {
 
-        // }
+        }
 
     }
     return element;
@@ -156,6 +156,7 @@ class TaskManager
         constructor()
         {
             this.allTasks = [];
+            this.display = [];
         }
         //returns the list of all task
         getAllTask()
@@ -180,7 +181,7 @@ class TaskManager
             console.log(selectValue);
 
            //creates and empty array
-           let filteredTasks = [];
+           
 
            //foreach object in data, do whatever is inside the curly braces
            data.forEach((obj) => 
@@ -188,43 +189,49 @@ class TaskManager
 
                 if(selectValue === 'all')
                 {
-                    filteredTasks = data;  
-                    console.log(filteredTasks);
-                    //stores array in new storage key "SelectCard"
-                    localStorage.setItem("SelectCard", JSON.stringify(filteredTasks)); 
 
-                    //if length of the array is more than value of i then loop again and increase i
-                    for(let i = 0; i < filteredTasks.length; i++)
+                    this.display = data;
+
+                     
+                    //stores array in new storage key "SelectCard"
+                    localStorage.setItem("SelectCard", JSON.stringify(this.display)); 
+
+                    //if length of the array is more than value of i then loop again then increase i
+                    for(let i = 0; i < data.length; i++)
                     {
                         //reloads page
                         location.reload();
+
+                        
                     }
+                    
                 }
                 //if objects in data with the same status as the value selected then add the object to the array
                 else if (obj.status === selectValue ) 
                 {   
 
-                    //adds object to array filteredTasks
-                    filteredTasks.push(obj);
+                    //adds object to array display
+                    this.display.push(obj);
+                    localStorage.setItem("SelectCard", JSON.stringify(this.display));
 
                     // console.log(data);
                     // console.log(obj.id);
                     // console.log(obj.status);
                     // console.log(filteredTasks);
-                    localStorage.setItem("SelectCard", JSON.stringify(filteredTasks)); 
+                   
 
-                    for(let i = 0; i < filteredTasks.length; i++)
+                    for(let i = 0; i < data.length; i++)
                     {
+                        
+                        
                         location.reload();
+
                     }
                 }
-
-               
-                
                
            });
            
-           return filteredTasks;    
+            
            
            
        }
@@ -234,7 +241,7 @@ class TaskManager
 
        
         //interpolates the user input into the shown card
-        const cardContent  =  `<div class="col-md-6" taskId="${taskObj.id}">
+        const cardContent  =  `<div class="col" taskId="${taskObj.id}">
                                     <div class="card" >
                                         <div class="card-header">
                                         <h5>Task</h5>
@@ -253,7 +260,7 @@ class TaskManager
                                         </div>   
                                         <div>
                                         <button delId="${taskObj.id}" type="button" class="btn delete" >Delete</button>
-                                           
+                                        <button updateId="${taskObj.id}" type="button" class="btn update" >Edit</button>
                                         </div>                       
                                     </div> 
                                 </div>`;
@@ -268,7 +275,7 @@ class TaskManager
             //interpolates the user input into the shown list
             const listContent = `<a href="#${taskObj.id}" class="list-group-item list-group-item-action" listTaskId="${taskObj.id}" >
                                     <div class="d-flex w-100">
-                                    <h5 class="mb-1">Assigned To: ${taskObj.assignedTo}</h5>                             
+                                    <p class="mb-1">Assigned To: ${taskObj.assignedTo}</p>                             
                                     </div> 
                                     <small>Due Date: ${taskObj.date}</small>
                                     <small>Status: ${taskObj.status}</small>           
@@ -290,6 +297,9 @@ class TaskManager
         //deletes task from task list
         deleteTask(element)
         {
+
+            let taskData = localStorage.getItem("TaskCard");
+
             //this stores the element clicked top parent nodes id value
             let topParent = element.parentNode.parentNode.parentNode.attributes.taskId.value;
                 console.log(topParent);
@@ -300,12 +310,17 @@ class TaskManager
             {
                 if(this.allTasks[i].id == topParent)
                 {
+                    this.allTasks = JSON.parse(taskData);
                     //goes to the element clicked in the array and removes 1
                     this.allTasks.splice(i, 1);
-                // sets item in the local storage
-                localStorage.setItem("TaskCard", JSON.stringify(this.allTasks));
-                localStorage.setItem("SelectCard", JSON.stringify(this.filteredTasks));
+                    // sets item in the local storage
+                    localStorage.setItem("TaskCard", JSON.stringify(this.allTasks));
+                    
+                    
+                    // getTasksWithStatus(display.reload());
+                    
                 }
+
             }
 
 
@@ -345,12 +360,11 @@ class TaskManager
 
 let myTaskManager = new TaskManager();
 
+let taskData = localStorage.getItem("TaskCard");
 let selectedData = localStorage.getItem("SelectCard");
 
 console.log(selectedData);
 //this gets the data back from local storage and displays it on screen
- 
-console.log()
 
 function showItems(array)
 {
@@ -361,18 +375,19 @@ function showItems(array)
     }
 }
 
-if(selectedData)
+if(taskData)
 {
     myTaskManager.allTasks = JSON.parse(selectedData);
     showItems(myTaskManager.allTasks);
     console.log(myTaskManager.allTasks);
 } 
-//  if(selectedData)
+// else if(selectedData)
 // {
 //     myTaskManager.allTasks = JSON.parse(selectedData);
 //     showItems(myTaskManager.allTasks);
 //     console.log(myTaskManager.allTasks);
 // }
+
 
 
 // when clicking the clear storage button confirm alert appears 

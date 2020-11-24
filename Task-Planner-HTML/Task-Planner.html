@@ -37,7 +37,8 @@
       <form> 
         <div class="form-group">
           <button type="button" id="clearStorage" class="btn">Clear All Tasks</button>
-          <br>
+        </div>
+        <div>
           <label for="chooseStatus">Show Task By Status:</label>
           <select onchange="myTaskManager.getTasksWithStatus()" id="chooseStatus" class="form-control event-type-select">
             <option value="Choose">Choose...</option>
@@ -114,7 +115,7 @@
 
 
     <!--list coloumn-->
-    <div class="col-md-3">
+    <div class="col-md-3 ">
       <div class="list-group" id="listID" >
         <!--this is where my list of tasks will populate-->
       </div>

@@ -13,7 +13,7 @@ html, body
 
 .jumbotron
 {
-    font-size: 2vw;
+    font-size: 3vw;
     margin-top: 40px;
     border-radius: 20px;
     background-color:  #ffe2e2;
@@ -52,30 +52,31 @@ form
     
 }
 
-h5
+
+ h5
 {
     font-size: 1.5vw;
 }
 
 p
 {
-    font-size: 1.3vw;
+    font-size: 1.4vw;
 }
 
 label
 {
-    font-size: 1.3vw;
+    font-size: 1.5vw;
 }
 
 .form-control
 {
-    font-size: 1.3vw;
+    font-size: 1.5vw;
 }
 
 small
 {
-    font-size: 1.3vw;
-}
+    font-size: 1.5vw;
+} 
 
 .card-body
 {
@@ -85,17 +86,19 @@ small
 
 a.list-group-item
 {
+   
     background-color: #beebe9;
 }
 
 a.list-group-item-action:hover
 {
+    
     background-color:#ffe2e2;
 }
 
 .btn
 {
-    font-size: 1.3vw;
+    font-size:1.5vw;
     background-color:#ffe2e2;
 }
 
