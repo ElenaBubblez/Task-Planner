@@ -116,11 +116,12 @@ function createTaskObj(name, description, assignedTo, date, status)
 // click event to get whatever object has been clicked on.
 document.addEventListener('click', function(event)
 {
+    
     const element = event.target;
     //stores element clicked on in a variable
-    let isBTN = (event.target.nodeName == "BUTTON");
-    let isDeleteBtn = (event.target.classList == 'btn delete')
-    let isUpdateBtn = (event.target.classList == 'btn update')
+    let isBTN = (element.nodeName == "BUTTON");
+    let isDeleteBtn = (element.classList == 'btn delete');
+    let isUpdateBtn = (element.classList == 'btn update');
 
     if(isBTN == true)
     {
@@ -139,7 +140,8 @@ document.addEventListener('click', function(event)
 
         if(isUpdateBtn)
         {
-
+            myTaskManager.updateTask(element);
+            console.log(isUpdateBtn);
         }
 
     }
@@ -311,14 +313,11 @@ class TaskManager
                 if(this.allTasks[i].id == topParent)
                 {
                     this.allTasks = JSON.parse(taskData);
+
                     //goes to the element clicked in the array and removes 1
                     this.allTasks.splice(i, 1);
                     // sets item in the local storage
                     localStorage.setItem("TaskCard", JSON.stringify(this.allTasks));
-                    
-                    
-                    // getTasksWithStatus(display.reload());
-                    
                 }
 
             }
@@ -348,10 +347,104 @@ class TaskManager
         }
 
         //update task status 
-        updateTask()
+        updateTask(element, topParentID)
         { 
+             let taskData = localStorage.getItem("TaskCard");
+
+              //this stores the element clicked top parent nodes id value
+              topParentID = element.parentNode.parentNode.parentNode.attributes.taskId.value;
+            
+        
+
+
+            
+            
+
+
+
+
+                
+
+                for(let i = 0; i < this.allTasks.length; i++)
+                {
+                    if(this.allTasks[i].id == topParentID)
+                    {
+                        this.allTasks = JSON.parse(taskData);
+                        let dataInsert = this.allTasks[i]
+                        console.log(this.allTasks[i]);
+                   //interpolates the user input into the shown card
+                   let editForm =  `<div class="col" taskId="${dataInsert.id}">
+                                        <div class="card" >
+                                            <div class="card-header">
+                                                <h5>Task</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div>
+                                                    <h5 class="card-title">Assigned To:</h5>
+                                                    <input type="text" class="form-control" value="${dataInsert.assignedTo}">
+                                                </div>
+                                                <div>
+                                                    <h5 class="card-title">Assigned By:</h5>
+                                                    <input type="text" class="form-control" value="${dataInsert.name}">
+                                                </div>
+                                                <div>
+                                                    <h5 class="card-title">Description:</h5>
+                                                    <input type="text" class="form-control" value="${dataInsert.description}">
+                                                </div>
+                                                <div>
+                                                    <h5 class="card-title">Due Date:</h5>
+                                                    <input type="text" class="form-control" value="${dataInsert.date}">
+                                                </div>
+                                                <div>
+                                                    <h5 class="card-title" id="status" >Status:</h5>
+                                                    <select id="inputStatus" class="form-control">
+                                                    <option value="Choose">${dataInsert.status}</option>
+                                                    <option value="ToDo">To Do</option>
+                                                    <option value="In Progress">In Progress</option>
+                                                    <option value="Review">Review</option>
+                                                    <option value="Done">Done</option>
+                                                    </select> 
+                                                </div>                                      
+                                            </div>   
+                                            <div>
+                                                <button delId="${element.id}" type="button" class="btn delete" >Delete</button>
+                                                <button updateId="${element.id}" type="button" class="btn save" >Save</button>
+                                            </div>                       
+                                        </div> 
+                                    </div>`;
+                
+                        let changeContent = element.parentNode.parentNode;
+                        console.log(changeContent);
+
+
+                        changeContent.innerHTML = editForm;
+                        // sets item in the local storage
+                        localStorage.setItem("TaskCard", JSON.stringify(this.allTasks));
+                    }
+    
+                }
+
+            // //gets all element of all the a tags 
+            // let elementA = document.getElementsByTagName('a');
+            
+
+            // for( let i = 0; i < elementA.length; i++)
+            // {
+            //     //element now = whatever 'a' tag has been targeted
+            //     element = elementA[i];
+            
+            //     //removes item from list
+            //     if(element.attributes.listTaskId.value == topParentID)
+            //     {
+                
+            //     }
+            // }
+          
+
             
         }
+
+
     
     
 }
@@ -360,7 +453,7 @@ class TaskManager
 
 let myTaskManager = new TaskManager();
 
-let taskData = localStorage.getItem("TaskCard");
+
 let selectedData = localStorage.getItem("SelectCard");
 
 console.log(selectedData);
@@ -375,18 +468,12 @@ function showItems(array)
     }
 }
 
-if(taskData)
+if(selectedData)
 {
     myTaskManager.allTasks = JSON.parse(selectedData);
     showItems(myTaskManager.allTasks);
     console.log(myTaskManager.allTasks);
 } 
-// else if(selectedData)
-// {
-//     myTaskManager.allTasks = JSON.parse(selectedData);
-//     showItems(myTaskManager.allTasks);
-//     console.log(myTaskManager.allTasks);
-// }
 
 
 
